@@ -114,17 +114,11 @@ You can decide if you want to handle the event by overriding the
 built in method does some important filtering, so you probably want to
 call it with `super`).
 
-Sensu's configuration settings are available with the `settings` method
-(they will be loaded on first use). We recommend you put your settings in a
-JSON file in `/etc/sensu/conf.d`, with a unique top-level key, like:
+### Important
 
-```
-{
-  "mycheck": {
-    "foo": true
-  }
-}
-```
+Filtering of events is now deprecated in `Sensu::Handler` and will be removed
+in a future release. See [this blog post](https://sensuapp.org/blog/2016/07/07/sensu-plugin-filter-deprecation.html)
+for more detail.
 
 ## Mutator
 
@@ -134,18 +128,6 @@ checks and metrics; Your class should implement `mutate`. The instance variable
 the mutator will abort. Output to stdout will then be piped through to the
 handler.  As described in the docs if a mutator fails to run the event will
 not be handled.
-
-Sensu's configuration settings are available with the `settings` method
-(they will be loaded on first use). We recommend you put your settings in a
-JSON file in `/etc/sensu/conf.d`, with a unique top-level key, like:
-
-```
-{
-  "mymutator": {
-    "foo": true
-  }
-}
-```
 
 The example mutator found [here](https://sensuapp.org/docs/latest/mutators) will
 look like so:
@@ -159,6 +141,31 @@ class MyMutator < Sensu::Mutator
     @event.merge!(:mutated => true)
   end
 
+end
+```
+
+## Plugin settings
+
+Whether you are writing a check, handler or mutator, Sensu's configuration
+settings are available with the `settings` method (loaded automatically
+when the plugin runs). We recommend you put your custom plugin settings
+in a JSON file in `/etc/sensu/conf.d`, with a unique top-level key,
+e.g. `my_custom_plugin`:
+
+```
+{
+  "my_custom_plugin": {
+    "foo": true,
+    "bar": false
+  }
+}
+```
+
+And access them in your plugin like so:
+
+```ruby
+def foo_enabled?
+  settings['my_custom_plugin']['foo']
 end
 ```
 
