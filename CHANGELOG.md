@@ -4,6 +4,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v1.4.2] - 2016-08-08
+
+- Fixed a condition in which empty strings in check `dependencies` attribute values would cause an exception. (#147 via @rs-mrichmond)
+
+## [v1.4.1] - 2016-08-03
+
+### Changed
+- Actually fix dependency loading problems in Ruby 1.9 environments by changing 'json' dependency from `<= 2.0.0` to `< 2.0.0`. (#149 via @cwjohnston)
+
 ## [v1.4.0] - 2016-07-20
 
 ### Important
@@ -11,8 +20,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Warnings are now visible in handler output when deprecated event filtering is used, as it is by default. (#139 via @cwjohnston)
-- Filtering of events can now be disabled on a per-check basis by setting value of custom attribute `deprecated_filtering_enabled` to `false` (#139 via @cwjohnston)
-- Filtering of events based on occurrences can now be disabled on a per-check basis by setting value of custom attribute `deprecated_occurrence_filtering_enabled` to `false`  (#139 via @cwjohnston)
+- Filtering of events can now be disabled on a per-check basis by setting value of custom attribute `enable_deprecated_filtering` to `false` (#139 via @cwjohnston)
+- Filtering of events based on occurrences can now be disabled on a per-check basis by setting value of custom attribute `enable_deprecated_occurrence_filtering` to `false`  (#139 via @cwjohnston)
 - The `deep_merge` implementation has changed to mirror that of Sensu Core (#123 via @amdprophet):
 
  > Previously, if there were two conflicting data types in the same namespace (e.g. a Hash in one file, and an Array in another), sensu-plugin would throw an exception. It will now only use whatever loaded first, which is how Sensu Core handles this problem.
@@ -60,7 +69,9 @@ The changes in earlier releases are not fully documented but comparison links ar
 * [v0.1.1]
 * [v0.1.0]
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugin/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugin/compare/v1.4.2...HEAD
+[v1.4.2]: https://github.com/sensu-plugins/sensu-plugin/compare/v1.4.1...v1.4.2
+[v1.4.1]: https://github.com/sensu-plugins/sensu-plugin/compare/v1.4.0...v1.4.1
 [v1.4.0]: https://github.com/sensu-plugins/sensu-plugin/compare/v1.3.0...v1.4.0
 [v1.3.0]: https://github.com/sensu-plugins/sensu-plugin/compare/v1.2.0...v1.3.0
 [v1.2.0]: https://github.com/sensu-plugins/sensu-plugin/compare/v1.1.0...v1.2.0
